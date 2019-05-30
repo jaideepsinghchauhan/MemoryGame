@@ -1,144 +1,147 @@
 <!DOCTYPE html>
 <HTML>
+
 <HEAD>
-  <meta charset="UTF-8">
-  <meta name="description" content="JavaScript Mind Game">
-  <meta name="keywords" content="HTML,CSS,JavaScript, Game">
-  <meta name="author" content="Jaideep Singh">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<TITLE>Mind Game</TITLE>
-<style>
-#wrapper{
-	border-style:solid;
-	height:374px;
-    width:374px;
-	margin-left: auto; 
-	margin-right: auto;
-	border-width:1px;
-}
-.gridSquare{
-	height: 60px;
-	width : 60px;
-	background-color : #404040;
-	border-radius : 7px;
-	margin:1px;
-	position:relative;
-}
-.gridCircle {
-  height: 38px;
-  width: 38px;
-  background-color: white;
-  border-radius: 50%;
-  font-size: 50px;
-  margin-left : 2px;
-}
-</style>
-<script type="text/javascript">
-	var randomCircles = 5;
-	var gameState = 'ready';
-	var randomArray=[];
-	var visitedArray=[];
-		
-	function resetGame(){
-					gameState='ready';
-					var old_element = document.getElementById("wrapper");
-					var new_element = old_element.cloneNode(true);
-					old_element.parentNode.replaceChild(new_element, old_element);
-					document.getElementById('wrapper').innerHTML="";
-					randomArray=[];
-					visitedArray=[];
-					codeGame();
-	}
-	
-	function toggle(className, displayState){
-		var elements = document.getElementsByClassName(className)
-     for (var i = 0; i < elements.length; i++){
-        elements[i].style.display = displayState;
-     }
-   }
-   function createGrid(){
-   for(let i = 1; i <= 36 ; i++){
-			var btn = document.createElement("button");     
-				btn.className = "gridSquare"; 		
-				btn.id = "btn"+i;
-			document.getElementById('wrapper').appendChild(btn);                    
-		}
-		
-						var index=1;
-		while(index <= randomCircles){
-			let randomValue = Math.floor(Math.random() * (36)) + 1;
-			
-			if(randomArray.indexOf(randomValue) == -1){
-					var circle = document.createElement('div');
-					circle.className = "gridCircle";
-					circle.id = "crc"+randomValue;
-					document.getElementById("btn"+randomValue).appendChild(circle);					
-					randomArray.push(randomValue);
-					index++;
-			}
-		}
-   }
+    <meta charset="UTF-8">
+    <meta name="description" content="JavaScript Mind Game">
+    <meta name="keywords" content="HTML,CSS,JavaScript, Game">
+    <meta name="author" content="Jaideep Singh">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <TITLE>Mind Game</TITLE>
+    <style>
+        #wrapper {
+            border-style: solid;
+            height: 374px;
+            width: 374px;
+            margin-left: auto;
+            margin-right: auto;
+            border-width: 1px;
+        }
 
-  function codeGame() {
+        .gridSquare {
+            height: 60px;
+            width: 60px;
+            background-color: #404040;
+            border-radius: 7px;
+            margin: 1px;
+            position: relative;
+        }
 
-	createGrid();
-		
-    document.getElementById('wrapper').addEventListener('click',function(e){
-		
-console.log("visited"+visitedArray);
-console.log("random"+randomArray);
-	if(e.target.id=='wrapper')
-	return;
-			
-		var elemId = e.target.id.substring(3,6);	
-console.log(elemId);
-	       elemId=elemId*1;
-	  
-	  if(gameState == 'ready'){
-console.log('ready state');
-			  if(randomArray.includes(elemId)){ 
-				toggle('gridCircle', 'none'); // hides
-				gameState = 'started';
-				visitedArray.push(elemId);
-				}else{
-					alert('lose');
-					randomCircles=5;
-					resetGame();
-				}
-		}else if(gameState == 'started'){
-			if(visitedArray.includes(elemId)){
-			     alert("already Identified");
-			 }else if(randomArray.includes(elemId)){
-				visitedArray.push(elemId);
-			 }else{
-				randomCircles=5;
-				alert('lose');	
-				resetGame();
-			}	
-			
-	    }
-        if(visitedArray.length == randomCircles){
-			alert('Won');
-			randomCircles++;
-			resetGame();
-		}else if(randomCircles == 35){
-		alert('Winner of Game');
-			randomCircles=5;
-			resetGame();
-		}
-		
-	});
-		
-  }
- window.onload = codeGame;
- </script>
+        .gridCircle {
+            height: 38px;
+            width: 38px;
+            background-color: white;
+            border-radius: 50%;
+            font-size: 50px;
+            margin-left: 2px;
+        }
+    </style>
+    <script type="text/javascript">
+        var randomCircles = 5;
+        var gameState = 'ready';
+        var randomArray = [];
+        var visitedArray = [];
+
+        function resetGame() {
+            gameState = 'ready';
+            var old_element = document.getElementById("wrapper");
+            var new_element = old_element.cloneNode(true);
+            old_element.parentNode.replaceChild(new_element, old_element);
+            document.getElementById('wrapper').innerHTML = "";
+            randomArray = [];
+            visitedArray = [];
+            codeGame();
+        }
+
+        function toggle(className, displayState) {
+            var elements = document.getElementsByClassName(className)
+            for (var i = 0; i < elements.length; i++) {
+                elements[i].style.display = displayState;
+            }
+        }
+        function createGrid() {
+            for (let i = 1; i <= 36; i++) {
+                var btn = document.createElement("button");
+                btn.className = "gridSquare";
+                btn.id = "btn" + i;
+                document.getElementById('wrapper').appendChild(btn);
+            }
+
+            var index = 1;
+            while (index <= randomCircles) {
+                let randomValue = Math.floor(Math.random() * (36)) + 1;
+
+                if (randomArray.indexOf(randomValue) == -1) {
+                    var circle = document.createElement('div');
+                    circle.className = "gridCircle";
+                    circle.id = "crc" + randomValue;
+                    document.getElementById("btn" + randomValue).appendChild(circle);
+                    randomArray.push(randomValue);
+                    index++;
+                }
+            }
+        }
+
+        function codeGame() {
+
+            createGrid();
+
+            document.getElementById('wrapper').addEventListener('click', function (e) {
+
+                if (e.target.id == 'wrapper')
+                    return;
+
+                var elemId = e.target.id.substring(3, 6);
+
+                elemId = elemId * 1;
+                if (gameState == 'ready') {
+                    if (randomArray.includes(elemId)) {
+                        toggle('gridCircle', 'none'); // hides
+                        gameState = 'started';
+                        visitedArray.push(elemId);
+                    } else {
+                        alert('lose');
+                        randomCircles = 5;
+                        resetGame();
+                    }
+                } else if (gameState == 'started') {
+                    if (visitedArray.includes(elemId)) {
+                        alert("already Identified");
+                    } else if (randomArray.includes(elemId)) {
+                        visitedArray.push(elemId);
+                    } else {
+                        randomCircles = 5;
+                        alert('lose');
+                        resetGame();
+                    }
+
+                }
+                if (visitedArray.length == randomCircles) {
+                    alert('Won');
+                    randomCircles++;
+                    resetGame();
+                } else if (randomCircles == 35) {
+                    alert('Winner of Game');
+                    randomCircles = 5;
+                    resetGame();
+                }
+
+            });
+
+        }
+        window.onload = codeGame;
+    </script>
 </HEAD>
- <BODY BGCOLOR="FFFFFF">
-  <CENTER><h2>Memory Game JavaScript</h2></CENTER>
-  <HR>
-	 <div class="wrapper" id="wrapper">
-	 
-	 </div>
-  <HR>
- </BODY>
+
+<BODY BGCOLOR="FFFFFF">
+    <CENTER>
+        <h2>Memory Game JavaScript</h2>
+    </CENTER>
+    <HR>
+    <div class="wrapper" id="wrapper">
+
+    </div>
+    <HR>
+</BODY>
+
 </HTML>
